@@ -1,16 +1,25 @@
 import "./App.css";
-import Header from "./Components/Header/Header";
-import HeadLine from "./Components/HeadlineSection/HeadLine";
-import InteractionSection from "./Components/InteractionSection/InteractionSection";
-import PostSection from "./Components/PostSections/PostSection";
-import TweetSection from "./Components/TweetSection/TweetSection";
+import ReactDOM from "react-dom";
+import Dashboard from "./Components/DashBoard/Dashboard";
+
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import HomePage from "./Components/HomePage/HomePage";
+import Login from "./Components/Registration/Login";
+import Signup from "./Components/Registration/Signup";
 
 function App() {
   return (
     <div className="App">
-      <Header />
-      <HeadLine/>
-      <InteractionSection/>
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <HomePage />
+          </Route>
+          <Route path="/dashboard"><Dashboard/></Route>
+          <Route path="/login"><Login/></Route>
+          <Route path="/signup"><Signup /></Route>
+        </Switch>
+      </Router>
     </div>
   );
 }

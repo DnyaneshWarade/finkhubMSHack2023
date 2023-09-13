@@ -5,6 +5,7 @@ import productImage from "./../../Images/product-name-img.png";
 import BurgerIcon from "./../../Images/burger-icon.svg";
 import NoProfileIcon from "./../../Images/no-profile-icon.svg";
 import NavbarItem from "./NavbarItem";
+import {Link} from "react-router-dom"
 
 function Header() {
   return (
@@ -18,15 +19,33 @@ function Header() {
       </div>
       <div className="navbar-right">
         <ul className="nav-items">
-          <li><a href="/"><NavbarItem heading="Destacados"/></a></li>
-          <li><a href="/"><NavbarItem heading="Servicios"/></a></li>
-          <li><a href="/"><NavbarItem heading="Comunidad"/></a></li>
-          <li><a href="/"><NavbarItem heading="ServiceTest"/></a></li>
+          <li>
+            <a href="/dashboard">
+              <NavbarItem heading="Destacados" />
+            </a>
+          </li>
+          <li>
+            <a href="/">
+              <NavbarItem heading="Servicios" />
+            </a>
+          </li>
+          <li>
+            <a href="/">
+              <NavbarItem heading="Comunidad" />
+            </a>
+          </li>
+          <li>
+            <a href="/">
+              <NavbarItem heading="ServiceTest" />
+            </a>
+          </li>
         </ul>
-        <div className="login-icon">
-          <img src={BurgerIcon} alt="menu" />
-          <img src={NoProfileIcon} alt="profile"/>
-        </div>
+        <Link to="/login">
+          <div className="login-icon">
+            <img src={BurgerIcon} alt="menu" />
+            <img src={NoProfileIcon} alt="profile" />
+          </div>
+        </Link>
       </div>
     </div>
   );
