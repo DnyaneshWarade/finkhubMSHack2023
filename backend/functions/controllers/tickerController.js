@@ -1,6 +1,10 @@
 const { logger } = require("firebase-functions/v1");
 const Post = require("../models/post");
-const { getTickerPrice } = require("../services/tickerPriceFunctions");
+const {
+	getTickerPrice,
+	getTickerMinMax,
+} = require("../services/tickerPriceFunctions");
+const { json } = require("express");
 
 exports.getTickerPrice = async (req, res) => {
 	try {
@@ -15,7 +19,18 @@ exports.getTickerPrice = async (req, res) => {
 			var tickerCurrentPrice =
 				result.res.chart.result[0].meta.regularMarketPrice;
 			if (tickerCurrentPrice) {
-				return res.status(200).send(`${tickerCurrentPrice}`);
+				// get min max for the symbol as well
+				var minMaxRet = await getTickerMinMax(ticker);
+				var min = 0;
+				var max = 0;
+				var ret;
+				if (minMaxRet.code === 200) {
+					ret = { price: tickerCurrentPrice, ...minMaxRet.res };
+				} else {
+					ret = { price: tickerCurrentPrice, min: min, max: max };
+				}
+
+				return res.status(200).json(ret);
 			}
 		}
 	} catch (error) {

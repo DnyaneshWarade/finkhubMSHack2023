@@ -49,7 +49,9 @@ export default function Dashboard() {
       setSelectedStockSymbol(selectedCompany[0]);
       var result = await getTickerPrice(selectedCompany[0]);
       if (result.code === 200 && result.res) {
-        setStockPrice(result.res);
+        setStockPrice(result.res.price);
+        setMinPrice(result.res.min);
+        setMaxPrice(result.res.max);
       }
     }
   };
