@@ -29,14 +29,15 @@ export default function Dashboard() {
   //   return `${key} - ${companies[key]}`;
   // });
 
-  const handleExpectedAmount = () => {
+  const handleSaveThePost = () => {
     console.log(minPrice, expectedAmount, maxPrice)
     if (minPrice > expectedAmount || maxPrice < expectedAmount) {
       alert("Should be with min and max");
       return;
     }
     setExpectedAmount(expectedAmount);
-    alert("Saved")
+    alert("Saved");
+    //calling api to save it on server.
   }
 
   const handleBlur = async () => {
@@ -159,7 +160,7 @@ export default function Dashboard() {
           <img src={ProfileIcon} alt="icon" />
           <p>{preview}</p>
         </div>
-        <div className="PostButton" onClick={handleExpectedAmount}>
+        <div className="PostButton" onClick={handleSaveThePost}>
           <p>Post</p>
         </div>
       </div>
