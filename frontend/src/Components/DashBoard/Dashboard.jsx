@@ -4,6 +4,7 @@ import Companies from "../../Resources/Companies";
 import "./Dashboard.css";
 import ProfileIcon from "./../../Images/ProfileIcon.png";
 import { getTickerPrice } from "../../Services/tickerPriceFunctions";
+import { createPost } from "../../Services/postFunctions";
 
 export default function Dashboard() {
   const [userType, setUserType] = useState("PulseTradeAI");
@@ -12,16 +13,12 @@ export default function Dashboard() {
   const [selectedStockSymbol, setSelectedStockSymbol] = useState('');
   const [stockPrice, setStockPrice] = useState();
   const [amount, setAmount] = useState("");
-  const [expectedAmount, setExpectedAmount] = useState(0);
+  const [transactionAmount, setTransactionAmount] = useState(0);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
   const [expectedProfit, setExpectedProfit] = useState("");
   const [expectedLoss, setExpectedLoss] = useState("");
-  const preview = `I am a StockFink user of ${userType} and I decided to ${action} ${stock}  at ${amount} USD. The  calculated  expected profit is ${expectedProfit} and expected risk is ${expectedLoss}. `;
-
-  // const [searchInput, setSearchInput] = useState("");
-  // const [filteredResults, setFilteredResults] = useState([]);
-  // const [selectedItem, setSelectedItem] = useState(null);
+  const preview = `I am a StockFink user of ${userType} and I decided to ${action} ${stock} at ${stockPrice} USD. The calculated expected profit is ${expectedProfit} and expected risk is ${expectedLoss}. `;
 
   const companies = Companies;
 
@@ -29,15 +26,28 @@ export default function Dashboard() {
   //   return `${key} - ${companies[key]}`;
   // });
 
-  const handleSaveThePost = () => {
-    console.log(minPrice, expectedAmount, maxPrice)
-    if (minPrice > expectedAmount || maxPrice < expectedAmount) {
+  const handlePostSubmission = async () => {
+    if (minPrice > transactionAmount || maxPrice < transactionAmount) {
       alert("Should be with min and max");
       return;
     }
-    setExpectedAmount(expectedAmount);
-    alert("Saved");
-    //calling api to save it on server.
+
+    // prepare a post
+    var post = {
+      userId : "xyz",
+      ticker: selectedStockSymbol,
+      timeStamp: Date.now(),
+      stopLoss: minPrice,
+      target: maxPrice,
+      tradeType: action == "Buy" ? 0 : 1,
+      price: stockPrice,
+      isComplete: false
+    };
+    
+    var ret = await createPost(post);
+    if (ret.code === 201) {
+      alert("success" + ret.res);
+    } else {alert("failed");}
   }
 
   const handleBlur = async () => {
@@ -145,8 +155,8 @@ export default function Dashboard() {
               type="number"
               id="amount"
               max="100000"
-              onChange={(e) => setExpectedAmount(e.target.value)}
-              value={expectedAmount}
+              onChange={(e) => setTransactionAmount(e.target.value)}
+              value={transactionAmount}
             />
             <span className="Currency">USD</span>
             <div className="value-1">Min: {minPrice === 0 ? "" : minPrice}</div>
@@ -160,7 +170,7 @@ export default function Dashboard() {
           <img src={ProfileIcon} alt="icon" />
           <p>{preview}</p>
         </div>
-        <div className="PostButton" onClick={handleSaveThePost}>
+        <div className="PostButton" onClick={handlePostSubmission}>
           <p>Post</p>
         </div>
       </div>

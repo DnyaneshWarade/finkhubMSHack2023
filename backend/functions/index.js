@@ -6,6 +6,7 @@ const admin = require("firebase-admin");
 const postRoutes = require("./routes/postRoutes");
 const tickerRoutes = require("./routes/tickerRoutes");
 const cron = require("node-cron");
+const cors = require("cors");
 const {
 	getAllOpenPosts,
 	updatePost,
@@ -15,12 +16,12 @@ const app = express();
 
 admin.initializeApp();
 app.use(express.json());
-// Enable CORS for all origins (for development)
-app.use((req, res, next) => {
-	res.header("Access-Control-Allow-Origin", "*");
-	// You can also specify other CORS headers here
-	next();
-});
+
+app.use(
+	cors({
+		allowedHeaders: ["Content-Type"],
+	})
+);
 
 app.use("/post", postRoutes);
 app.use("/ticker", tickerRoutes);
