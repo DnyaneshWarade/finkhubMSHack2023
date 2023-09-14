@@ -1,5 +1,4 @@
 const { axiosHttpService } = require("../axioscall");
-//const { getGUID } = require("../helper/helperFunctions");
 
 const createPostOption = (post, id) => {
 	if (!post || !id) {
@@ -48,30 +47,77 @@ const createPost = async (post) => {
 	return result;
 };
 
-const getUserProfileOption = (id) => {
-	if (!id) {
-		return;
-	}
+const getAllOpenPostsOption = () => {
+	let data = JSON.stringify({
+		query: `{
+		  Post(isComplete: false){
+			  id,
+			  userId,
+			  ticker,
+			  timeStamp, 
+			  stopLoss,
+			  target,
+			  tradeType,
+			  price,
+			  isComplete,
+			  ledgerMetadata{
+				owners
+			  }
+	  }}`,
+		variables: {},
+	});
 
 	return {
-		method: "get",
+		method: "post",
 		maxBodyLength: Infinity,
-		url: `https://${process.env.REACT_APP_SPYDRA_MEMBERSHIP_ID}.spydra.app/tokenize/${process.env.REACT_APP_SPYDRA_APP_ID}/asset?assetType=User&id=${id}`,
+		url: `https://${process.env.SPYDRA_MEMBERSHIP_ID}.spydra.app/tokenize/${process.env.SPYDRA_APP_ID}/graphql`,
 		headers: {
-			"X-API-KEY": process.env.REACT_APP_SPYDRA_API_KEY,
+			"X-API-KEY": process.env.SPYDRA_API_KEY,
 		},
+		data: data,
+		"Content-Type": "application/json",
 	};
 };
 
-const getUserProfile = async (id) => {
-	if (!id) {
-		return;
-	}
-	let result = await axiosHttpService(getUserProfileOption(id));
+const getAllOpenPosts = async () => {
+	let result = await axiosHttpService(getAllOpenPostsOption());
 	if (result.code === 200) {
-		return result.res;
+		return result.res.data.Post;
 	}
 	return;
 };
 
-module.exports = { createPost };
+const updatePostOption = (post) => {
+	if (!post) {
+		return;
+	}
+
+	let data = JSON.stringify({
+		assetType: "Post",
+		data: [
+			{
+				...post,
+			},
+		],
+	});
+
+	return {
+		method: "put",
+		maxBodyLength: Infinity,
+		url: `https://${process.env.SPYDRA_MEMBERSHIP_ID}.spydra.app/tokenize/${process.env.SPYDRA_APP_ID}/asset`,
+		headers: {
+			"Content-Type": "application/json",
+			"X-API-KEY": process.env.SPYDRA_API_KEY,
+		},
+		data: data,
+	};
+};
+
+const updatePost = async (post) => {
+	if (!post) {
+		return;
+	}
+	return await axiosHttpService(updatePostOption(post));
+};
+
+module.exports = { createPost, getAllOpenPosts, updatePost };
