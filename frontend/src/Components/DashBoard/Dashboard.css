@@ -1,0 +1,164 @@
+.DashBoard {
+  text-align: left;
+  padding: 5% 5% 0% 10%;
+}
+
+.RadioSwitch {
+  margin-left: 20px;
+  display: inline-flex;
+  padding: 4px 24px 4px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 62px;
+  border-radius: 30px;
+  border: 1px solid var(--neutral-colors-color-600, #d4d2e3);
+  background: var(--neutral-colors-white, #fff);
+}
+
+.RadioSwitch input[type="radio"]:checked + label {
+  display: flex;
+  padding: 5px;
+  justify-content: flex-end;
+
+  gap: 10px;
+  border-radius: 50px;
+  border: 1px solid #8692df;
+  background: rgba(134, 146, 223, 0.15);
+}
+.RadioSwitch input[type="radio"] {
+  display: none;
+}
+.RadioSwitch label {
+  text-align: left;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+.Preview {
+  display: flex;
+  max-width: 600px;
+  padding: 19px 30px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 18px;
+  text-align: left;
+  border-radius: 28px;
+  background: #f3f4fc;
+  margin-top: 30px;
+}
+
+.PreviewHeading {
+  width: 532px;
+  color: #000;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.304px;
+}
+
+.PreviewDescription {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+.PostButton {
+  width: auto;
+  display: flex;
+  align-items: flex-start;
+  padding: 0px 40px;
+  gap: 10px;
+  border-radius: 73px;
+  background: #525886;
+}
+
+.PostButton p {
+  color: #fff;
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%;
+  letter-spacing: -0.266px;
+}
+
+.StockSelect input[type="text"] {
+  max-width: 250px;
+  height: 25px;
+  margin: 0 auto;
+  border: none; /* <-- This thing here */
+  outline: none;
+  border: solid 1px #ccc;
+  border-radius: 100px;
+  margin-left: 30px;
+}
+
+.PriceInput {
+  /* display: inline-flex;
+  max-width: 140px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  border: 1px solid var(--neutral-colors-color-600, #d4d2e3);
+  background: var(--neutral-colors-white, #fff); */
+  /* gap: 24px; */
+  /* padding: 4px 24px 4px 6px; */
+}
+
+.PriceInput input[type="number"] {
+  border: none;
+  margin-top: 15px;
+  outline: none;
+  color: #000;
+  text-align: center;
+  font-family: Inter;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+
+  display: inline-flex;
+  max-width: 140px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  border: 1px solid var(--neutral-colors-color-600, #d4d2e3);
+  background: var(--neutral-colors-white, #fff);
+  padding: 12px 10px 12px 0px;
+  /* line-height: 12.6px; 84% */
+}
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+.PriceInput input[type="number"]:focus {
+  outline: none;
+}
+.Currency {
+  margin-left: -50px;
+}
+
+.PriceRange input[type="number"] {
+  border: none;
+  margin-top: 15px;
+  outline: none;
+  color: #000;
+  text-align: center;
+  font-family: Inter;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+
+  display: inline-flex;
+  max-width: 140px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  border: 1px solid var(--neutral-colors-color-600, #d4d2e3);
+  background: var(--neutral-colors-white, #fff);
+  padding: 12px 10px 12px 0px;
+  margin-left: 10px;
+  /* line-height: 12.6px; 84% */
+}

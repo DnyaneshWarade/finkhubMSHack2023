@@ -5,17 +5,18 @@ import productImage from "./../../Images/product-name-img.png";
 import BurgerIcon from "./../../Images/burger-icon.svg";
 import NoProfileIcon from "./../../Images/no-profile-icon.svg";
 import NavbarItem from "./NavbarItem";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 
 function Header() {
   return (
     <div className="navbar">
       <div className="navbar-left">
-        <div className="logo">
-          <img src={logo} alt="logo" />
-          <img src={productImage} className="title" alt="product hading" />
-          {/* <span className="title"></span> */}
-        </div>
+        <Link to="/">
+          <div className="logo">
+            <img src={logo} alt="logo" />
+            <img src={productImage} className="title" alt="product hading" />
+          </div>
+        </Link>
       </div>
       <div className="navbar-right">
         <ul className="nav-items">
