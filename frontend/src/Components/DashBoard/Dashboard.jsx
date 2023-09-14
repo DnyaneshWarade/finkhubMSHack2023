@@ -9,8 +9,8 @@ export default function Dashboard() {
   const [action, setAction] = useState("");
   const [stock, setStock] = useState("");
   const [amount, setAmount] = useState("");
-  const [minPrice, setMinPrice] = useState("");
-  const [maxPrice, setMaxPrice] = useState("");
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(0);
   const [exProfit, setExpectedProfit] = useState("");
   const [exLoss, setExpectedLoss] = useState("");
   const preview = `I am a StockFink user of ${userType} and I decided to ${action} ${stock}  at ${amount} USD. The  calculated  expected profit is ${exProfit} and expected risk is ${exLoss}. `;
@@ -54,7 +54,7 @@ export default function Dashboard() {
           value="Buy"
           name="action"
           id="buy"
-          onChange={(e) => setUserType(e.target.value)}
+          onChange={(e) => setAction(e.target.value)}
         />
         <label htmlFor="buy">Buy</label>
 
@@ -63,7 +63,7 @@ export default function Dashboard() {
           value="Sell"
           name="action"
           id="sell"
-          onChange={(e) => setUserType(e.target.value)}
+          onChange={(e) => setAction(e.target.value)}
         />
         <label htmlFor="sell">Sell</label>
       </div>
@@ -85,13 +85,8 @@ export default function Dashboard() {
         </datalist>
       </span>
       <br />
-      {/* <select name="Stock" id="stock"
-      onChange={(e) => setStock(companies[e.target.value])}>
-        <option value="">----Select Stock----</option>
-        {Object.keys(companies).map((key) => <option value={key}>{key}-{companies[key]}</option>)}
-      </select> <br /> */}
-      at{" "}
-      <span className="PriceInput">
+      <div className="PriceSelection">
+        at
         <input
           type="number"
           id="amount"
@@ -99,24 +94,8 @@ export default function Dashboard() {
           onChange={(e) => setAmount(e.target.value)}
         />
         <span className="Currency">USD</span>
-      </span>
-      <br />
-      <div className="PriceRange">
-        min price
-        <input
-          type="number"
-          id="minprice"
-          onChange={(e) => setMinPrice(e.target.value)}
-        />{" "}
-        <span className="Currency">USD</span>
-        <br />
-        max price
-        <input
-          type="number"
-          id="maxprice"
-          onChange={(e) => setMaxPrice(e.target.value)}
-        />{" "}
-        <span className="Currency">USD</span>
+        <div class="value-1">Min: {minPrice === 0 ? "" : minPrice}</div>
+        <div class="value-2">Max: {maxPrice === 0 ? "" : maxPrice}</div>
       </div>
       <br />
       <div className="Preview">
