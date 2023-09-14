@@ -12,9 +12,9 @@ export default function Dashboard() {
   const [expectedAmount, setExpectedAmount] = useState(0);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
-  const [exProfit, setExpectedProfit] = useState("");
-  const [exLoss, setExpectedLoss] = useState("");
-  const preview = `I am a StockFink user of ${userType} and I decided to ${action} ${stock}  at ${amount} USD. The  calculated  expected profit is ${exProfit} and expected risk is ${exLoss}. `;
+  const [expectedProfit, setExpectedProfit] = useState("");
+  const [expectedLoss, setExpectedLoss] = useState("");
+  const preview = `I am a StockFink user of ${userType} and I decided to ${action} ${stock}  at ${amount} USD. The  calculated  expected profit is ${expectedProfit} and expected risk is ${expectedLoss}. `;
 
   // const [searchInput, setSearchInput] = useState("");
   // const [filteredResults, setFilteredResults] = useState([]);
@@ -22,9 +22,9 @@ export default function Dashboard() {
 
   const companies = Companies;
 
-  const companyList = Object.keys(companies).map((key) => {
-    return `${key} - ${companies[key]}`;
-  });
+  // const companyList = Object.keys(companies).map((key) => {
+  //   return `${key} - ${companies[key]}`;
+  // });
 
   const handleExpectedAmount = () => {
     console.log(minPrice, expectedAmount, maxPrice)
