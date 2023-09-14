@@ -3,11 +3,14 @@ import "./Dashboard.css";
 import Companies from "../../Resources/Companies";
 import "./Dashboard.css";
 import ProfileIcon from "./../../Images/ProfileIcon.png";
+import { getTickerPrice } from "../../Services/tickerPriceFunctions";
 
 export default function Dashboard() {
   const [userType, setUserType] = useState("");
   const [action, setAction] = useState("");
   const [stock, setStock] = useState("");
+  const [selectedStockSymbol, setSelectedStockSymbol] = useState('');
+  const [stockPrice, setStockPrice] = useState();
   const [amount, setAmount] = useState("");
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
@@ -24,6 +27,21 @@ export default function Dashboard() {
   const companyList = Object.keys(companies).map((key) => {
     return `${key} - ${companies[key]}`;
   });
+
+  const handleBlur = async () => {
+    // Check if the value in the input field is a valid company name
+    const selectedCompany = Object.entries(companies).find(
+      ([key, value]) => value === stock
+    );
+
+    if (selectedCompany) {
+      setSelectedStockSymbol(selectedCompany[0]);
+      var result = await getTickerPrice(selectedCompany[0]);
+      if (result.code === 200 && result.res) {
+        setStockPrice(result.res);
+      }
+    }
+  };
 
   return (
     <div className="DashBoard">
@@ -77,6 +95,7 @@ export default function Dashboard() {
             list="CompanyList"
             value={stock}
             onChange={(e) => setStock(e.target.value)}
+            onBlur={handleBlur}
             className="StockSelectInput"
             placeholder="Write a stock name"
           />
@@ -96,8 +115,9 @@ export default function Dashboard() {
           <input
             type="number"
             id="amount"
+            value={stockPrice}
+            disabled="true"
             max="100000"
-            onChange={(e) => setAmount(e.target.value)}
           />
           <span className="Currency">USD</span>
           <div class="value-1">Min: {minPrice === 0 ? "" : minPrice}</div>
