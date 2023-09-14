@@ -1,7 +1,25 @@
 .DashBoard {
   text-align: left;
-  padding: 5% 5% 0% 10%;
+  padding: 5% 5% 5% 10%;
 }
+.FirstLine{
+  display: flex;
+  justify-content: stretch;
+  align-items: center;
+}
+.SecondLine{
+  display: flex;
+  justify-content: stretch;
+  align-items: center;
+  margin-top: 10px;
+}
+.ThirdLine{
+  display: flex;
+  justify-content: stretch;
+  align-items: center;
+  margin-top: 10px;
+}
+
 
 .RadioSwitch {
   margin-left: 20px;
@@ -97,8 +115,8 @@
   margin-left: 30px;
 }
 
-.PriceInput {
-  /* display: inline-flex;
+/* .PriceInput {
+  display: inline-flex;
   max-width: 140px;
   justify-content: center;
   align-items: center;
@@ -106,8 +124,8 @@
   border: 1px solid var(--neutral-colors-color-600, #d4d2e3);
   background: var(--neutral-colors-white, #fff); */
   /* gap: 24px; */
-  /* padding: 4px 24px 4px 6px; */
-}
+  /* padding: 4px 24px 4px 6px;
+} */
 
 .PriceInput input[type="number"] {
   border: none;
@@ -171,7 +189,6 @@ input[type="number"]::-webkit-inner-spin-button {
 .PriceSelection input[type="number"] {
   margin-left: 10px;
   border: none;
-  margin-top: 15px;
   outline: none;
   color: #000;
   text-align: center;
