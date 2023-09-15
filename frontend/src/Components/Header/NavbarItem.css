@@ -1,11 +1,13 @@
-.MenuItem{
-
+.MenuItem {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
-.MenuItem-label{
-
+.MenuItem-label {
 }
 
-.MenuItem-image{
-
+.MenuItem-image {
+    padding-left: 2px ;
 }
