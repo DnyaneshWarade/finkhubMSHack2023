@@ -2,32 +2,31 @@
   text-align: left;
   padding: 5% 5% 5% 10%;
 }
-.Script{
+.Script {
   margin-left: 10px;
 }
-.FirstLine{
+.FirstLine {
   display: flex;
   justify-content: stretch;
   align-items: center;
 }
-.SecondLine{
+.SecondLine {
   display: flex;
   justify-content: stretch;
   align-items: center;
   margin-top: 10px;
 }
-.ThirdLine{
+.ThirdLine {
   display: flex;
-  justify-content:flex-start;
+  justify-content: flex-start;
   align-items: center;
   margin-top: 10px;
 }
-
 
 .RadioSwitch {
   margin-left: 20px;
   display: inline-flex;
-  justify-content:center;
+  justify-content: center;
   padding: 5px;
   justify-content: center;
   align-items: center;
@@ -38,7 +37,6 @@
 }
 
 .RadioSwitch input[type="radio"]:checked + label {
- 
   display: flex;
   padding: 5px;
   justify-content: flex-end;
@@ -49,7 +47,6 @@
   background: rgba(134, 146, 223, 0.15);
   margin-left: 0px;
   margin-bottom: 0px;
-  
 }
 .RadioSwitch input[type="radio"] {
   display: none;
@@ -57,7 +54,6 @@
   transition: 0.6ms;
 }
 .RadioSwitch label {
-  
   text-align: left;
   font-weight: normal;
   cursor: pointer;
@@ -67,13 +63,12 @@
   padding: 5px;
 }
 
-
 .RadioSwitch2 {
   margin-left: 20px;
   display: flex;
-  justify-content:center;
+  justify-content: center;
   padding-left: 5px;
-  padding-right: 5px;
+  padding-right: 10px;
   justify-content: center;
   align-items: center;
   gap: 62px;
@@ -87,7 +82,6 @@
   transition: 0.6ms;
 }
 .RadioSwitch2 label {
-  
   text-align: left;
   font-weight: normal;
   cursor: pointer;
@@ -97,27 +91,20 @@
   padding: 5px;
 }
 .RadioSwitch2 input[type="radio"]:checked + label {
- 
   display: flex;
   padding-left: 10px;
   padding-right: 10px;
   justify-content: flex-end;
-  
   border-radius: 40px;
   border: 1px solid #8692df;
   background: rgba(134, 146, 223, 0.15);
 
   margin-bottom: 0px;
-  
 }
-
-
-
-
 
 .Preview {
   display: flex;
-  max-width: 600px;
+  max-width: 550px;
   padding: 19px 30px;
   flex-direction: column;
   justify-content: center;
@@ -187,8 +174,8 @@
   border-radius: 30px;
   border: 1px solid var(--neutral-colors-color-600, #d4d2e3);
   background: var(--neutral-colors-white, #fff); */
-  /* gap: 24px; */
-  /* padding: 4px 24px 4px 6px;
+/* gap: 24px; */
+/* padding: 4px 24px 4px 6px;
 } */
 
 .PriceInput input[type="number"] {
@@ -252,13 +239,14 @@ input[type="number"]::-webkit-inner-spin-button {
   text-align: center; /* Center-align the values */
 }
 
-.Prediction{
+.Prediction {
   position: relative;
   display: inline-block;
   text-align: center; /* Center-align the values */
 }
 
-.PriceSelection input[type="number"], .Prediction input[type="number"] {
+.PriceSelection input[type="number"],
+.Prediction input[type="number"] {
   margin-left: 10px;
   border: none;
   outline: none;
@@ -305,36 +293,40 @@ input[type="number"]::-webkit-inner-spin-button {
   color: #555; /* Adjust the color as needed */
 }
 
-
-
-.FourthLine{
-  margin-top: 15px;
+.FourthLine {
+  margin-top: 25px;
+  margin-top: 25px;
+  color: #000;
+  font-family: Poppins;
 }
 /* Range Input changes */
 
-.RangeSelector{
-  display: inline-flex;
+.RangeSelector {
+  display: flex;
   justify-content: flex-start;
 }
-.RangeSelector label{
+.RangeSelector label {
   font-weight: normal;
 }
-
-.RangeSlider{
--webkit-appearance: none;
-&:focus {
-    outline: none;
+.StopLossDiv {
+  margin-right: 20px;
 }
-&::-webkit-slider-runnable-track {
+
+.RangeSlider {
+  -webkit-appearance: none;
+  &:focus {
+    outline: none;
+  }
+  &::-webkit-slider-runnable-track {
     height: 1px;
     cursor: pointer;
     box-shadow: none;
     background: black;
     border-radius: px;
     border: 0px solid #010101;
-}
+  }
 
-&::-webkit-slider-thumb {
+  &::-webkit-slider-thumb {
     height: 20px;
     width: 20px;
     border-radius: 22px;
@@ -342,5 +334,51 @@ input[type="number"]::-webkit-inner-spin-button {
     cursor: pointer;
     -webkit-appearance: none;
     margin-top: -10px;
-   }
+  }
+}
+
+.RenderingSliders {
+  margin-top: 15px;
+  width: 100vh;
+  height: 50px;
+  background-color: rgb(255 255 255 / 0.3);
+  backdrop-filter: blur(10px);
+  /* -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+  background-color: #adceec; */
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center;
+}
+
+.loader {
+  border: 7px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 7px solid #adb6ec;
+  width: 12px;
+  height: 12px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

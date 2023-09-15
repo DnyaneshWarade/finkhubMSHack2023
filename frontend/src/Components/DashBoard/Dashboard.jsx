@@ -5,6 +5,7 @@ import "./Dashboard.css";
 import ProfileIcon from "./../../Images/ProfileIcon.png";
 import { getTickerPrice } from "../../Services/tickerPriceFunctions";
 import { createPost } from "../../Services/postFunctions";
+import NotificationToast from "../NotificationToasts/NotificationToast";
 
 export default function Dashboard() {
   const sliderStps = 0.001;
@@ -17,11 +18,12 @@ export default function Dashboard() {
   const [transactionAmount, setTransactionAmount] = useState(0);
   const [minPrice, setMinPrice] = useState();
   const [maxPrice, setMaxPrice] = useState();
-  const [expectedProfit, setExpectedProfit] = useState("");
-  const [expectedLoss, setExpectedLoss] = useState("");
+  const [expectedProfitPercentage, setExpectedProfitPercentage] = useState("");
+  const [expectedLossPercentage, setExpectedLossPercentage] = useState("");
   const [stopLoss, setStopLoss] = useState();
   const [targeProfit, setTargetProfit] = useState();
-  const preview = `I am a StockFink user of ${userType} and I decided to ${action} ${stock} at ${stockPrice} USD. The calculated expected profit is ${expectedProfit} and expected risk is ${expectedLoss}. `;
+  const [renderSlider, setRenderSlider] = useState(0); //0: hide, 1: rendering, 2: show;
+  const preview = `I am a StockFink user of ${userType} and I decided to ${action} ${stock} at ${stockPrice} USD. The calculated expected profit is ${expectedProfitPercentage}% and expected risk is ${expectedLossPercentage}%. `;
 
   const companies = Companies;
 
@@ -31,8 +33,7 @@ export default function Dashboard() {
   const [stopLossRangeInitialValue, setStopLossRangeInitialValue] = useState(0);
   const [profitTargetRangeMinValue, setProfitTargetRangeMinValue] = useState(0);
   const [profitTargetRangeMaxValue, setProfitTargetRangeMaxValue] = useState(0);
-  const [profitTargetRangeInitialValue, setProfitTargetRangeInitialValue] =
-    useState(0);
+  const [profitTargetRangeInitialValue, setProfitTargetRangeInitialValue] = useState(0);
 
   const handlePostSubmission = async () => {
     if (minPrice > transactionAmount || maxPrice < transactionAmount) {
@@ -61,25 +62,46 @@ export default function Dashboard() {
   };
 
   const handleSetStock = (e) => {
+    // reset range parameter
     setStock(e.target.value);
     handleBlur();
   };
-  const handleBlur = async () => {
-    // Check if the value in the input field is a valid company name
-    const selectedCompany = Object.entries(companies).find(
-      ([key, value]) => value === stock
-    );
 
-    if (selectedCompany) {
-      setSelectedStockSymbol(selectedCompany[0]);
-      var result = await getTickerPrice(selectedCompany[0]);
-      if (result.code === 200 && result.res) {
-        setStockPrice(Number(result.res.price));
-        setMinPrice(Number(result.res.min));
-        setMaxPrice(Number(result.res.max));
-        updateRangeParameters();
+  const handleBlur = async () => {
+    try {
+      // resetRangeParameters();
+      setRenderSlider(1);
+      // Check if the value in the input field is a valid company name
+      const selectedCompany = Object.entries(companies).find(
+        ([key, value]) => value === stock
+      );
+
+      if (selectedCompany) {
+        setSelectedStockSymbol(selectedCompany[0]);
+        var result = await getTickerPrice(selectedCompany[0]);
+        if (result.code === 200 && result.res) {
+          setStockPrice(Number(result.res.price));
+          setMinPrice(Number(result.res.min));
+          setMaxPrice(Number(result.res.max));
+          updateRangeParameters();
+          setRenderSlider(2);
+        }
       }
+    } catch (error) {
+      console.log(error);
+      handleShowToast("Ooops, Something went wrong :(");
     }
+  };
+
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const handleShowToast = (message) => {
+    setToastMessage(message);
+    setShowToast(true);
+  };
+
+  const handleToastClose = () => {
+    setShowToast(false);
   };
 
   function updateRangeParameters() {
@@ -93,15 +115,7 @@ export default function Dashboard() {
       setProfitTargetRangeInitialValue(stockPrice);
       setStopLoss(stopLossRangeInitialValue);
       setTargetProfit(profitTargetRangeInitialValue);
-
-      // stopLossRangeMinValue = minPrice;
-      // stopLossRangeMaxValue = stockPrice;
-      // stopLossRangeInitialValue = stopLossRangeMaxValue;
-      // profitTargetRangeMinValue = stockPrice;
-      // profiltTargetRangeMaxValue = maxPrice;
-      // profiltTargetRangeInitialValue = profitTargetRangeMinValue;
       console.log("buy");
-      // return;
     }
     if (action === "Sell") {
       setStopLossRangeMinValue(stockPrice);
@@ -112,14 +126,7 @@ export default function Dashboard() {
       setProfitTargetRangeInitialValue(stockPrice);
       setStopLoss(stopLossRangeInitialValue);
       setTargetProfit(profitTargetRangeInitialValue);
-      // stopLossRangeMinValue = stockPrice;
-      // stopLossRangeMaxValue = maxPrice;
-      // stopLossRangeInitialValue = stopLossRangeMinValue;
-      // profitTargetRangeMinValue = minPrice;
-      // profiltTargetRangeMaxValue = stockPrice;
-      // profiltTargetRangeInitialValue = profiltTargetRangeMaxValue;
       console.log("sell");
-      // return;
     }
     console.log(
       stopLossRangeMinValue,
@@ -130,9 +137,39 @@ export default function Dashboard() {
       profitTargetRangeInitialValue
     );
   }
+  //update the risk and profit variables
+  useEffect(() => {
+    updateRiskAndProfitPercentage();
+  }, [stockPrice, stopLoss, targeProfit]);
+
+  function updateRiskAndProfitPercentage() {
+    if (action === "Buy") {
+      let risk = ((stockPrice - stopLoss) / stockPrice) * 100;
+      setExpectedLossPercentage(parseFloat(risk));
+
+      let profit = ((targeProfit - stockPrice) / stockPrice) * 100;
+      setExpectedProfitPercentage(profit);
+      return;
+    }
+    if (action === "Sell") {
+      let risk = ((stopLoss - stockPrice) / stockPrice) * 100;
+      setExpectedLossPercentage(parseFloat(risk));
+
+      let profit = ((stockPrice - setTargetProfit) / stockPrice) * 100;
+      setExpectedProfitPercentage(profit);
+
+      return;
+    }
+  }
 
   return (
     <div className="DashBoard">
+       {showToast && (
+        <NotificationToast
+          message={toastMessage}
+          onClose={handleToastClose}
+        />
+      )}
       <div className="Script">
         <div className="FirstLine">
           I am a StockFink user of
@@ -185,9 +222,9 @@ export default function Dashboard() {
               type="text"
               list="CompanyList"
               value={stock}
-              // onChange={(e) => setStock(e.target.value)}
+              onChange={(e) => setStock(e.target.value)}
               onBlur={handleSetStock}
-              onChange={handleSetStock}
+              // onChange={handleSetStock}
               className="StockSelectInput"
               placeholder="Write a stock name"
             />
@@ -208,7 +245,6 @@ export default function Dashboard() {
               type="number"
               id="amount"
               max="100000"
-              // onChange={(e) => setAmount(e.target.value)}
               value={stockPrice}
               disabled={true}
             />{" "}
@@ -228,52 +264,52 @@ export default function Dashboard() {
             <div className="value-2">Max: {maxPrice === 0 ? "" : maxPrice}</div>
           </div>
         </div>
-        {stock.length > 0 &&
+
+        {renderSlider ===2 && stock.length > 0 &&
           stopLossRangeMinValue != undefined &&
-          Number(stopLossRangeMinValue) > 0 && (
-            <div className="FourthLine">
-              {/* Ranges */}
-              <div className="RangeSelector">
-                <div className="StopLossDiv">
-                  <label htmlFor="StopLoss">
-                    StopLoss({stopLossRangeMinValue}, {stopLossRangeMaxValue})
-                  </label>
-                  <input
-                    type="range"
-                    name="StopLoss"
-                    id="StopLoss"
-                    min={stopLossRangeMinValue}
-                    max={stopLossRangeMaxValue}
-                    value={stopLoss}
-                    step={sliderStps}
-                    onChange={(e) => setStopLoss(parseFloat(e.target.value))}
-                    className="RangeSlider"
-                  />
-                  <p>stop loss: {stopLoss}</p>
-                </div>
-                <div className="TargetProfitDiv">
-                  <label htmlFor="TargetProfit">
-                    TargetProfit({profitTargetRangeMinValue},{" "}
-                    {profitTargetRangeMaxValue})
-                  </label>
-                  <input
-                    type="range"
-                    name="TargetProfit"
-                    id="TargetProfit"
-                    min={profitTargetRangeMinValue}
-                    max={profitTargetRangeMaxValue}
-                    value={targeProfit}
-                    step={sliderStps}
-                    onChange={(e) =>
-                      setTargetProfit(parseFloat(e.target.value))
-                    }
-                    className="RangeSlider"
-                  />
-                  <p>profit target: {targeProfit}</p>
-                </div>
+          Number(stopLossRangeMinValue) > 0 ?
+          (
+          <div className="FourthLine">
+            {/* Ranges */}
+            <div className="RangeSelector">
+              <div className="StopLossDiv">
+                <label htmlFor="StopLoss">StopLoss</label>
+                <input
+                  type="range"
+                  name="StopLoss"
+                  id="StopLoss"
+                  min={stopLossRangeMinValue}
+                  max={stopLossRangeMaxValue}
+                  value={stopLoss}
+                  step={sliderStps}
+                  onChange={(e) => setStopLoss(parseFloat(e.target.value))}
+                  className="RangeSlider"
+                />
+                <p>Stop Loss: {stopLoss}</p>
+              </div>
+              <div className="TargetProfitDiv">
+                <label htmlFor="TargetProfit">TargetProfit</label>
+                <input
+                  type="range"
+                  name="TargetProfit"
+                  id="TargetProfit"
+                  min={profitTargetRangeMinValue}
+                  max={profitTargetRangeMaxValue}
+                  value={targeProfit}
+                  step={sliderStps}
+                  onChange={(e) => setTargetProfit(parseFloat(e.target.value))}
+                  className="RangeSlider"
+                />
+                <p>Profit Target: {targeProfit}</p>
               </div>
             </div>
-          )}
+          </div>
+        ): renderSlider ===1 && (
+          <div className="RenderingSliders">
+            <div className="loader"></div>
+          </div>
+        )}
+        {/* )} */}
       </div>
 
       <div className="Preview">

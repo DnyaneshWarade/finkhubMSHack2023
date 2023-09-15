@@ -1,0 +1,36 @@
+.notification-toast {
+    position: fixed;
+    top: 90px;
+    right: 20px;
+    background-color: #575757;
+    color: white;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 250px;
+    z-index: 1000;
+  }
+  
+  .close-button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 18px;
+    &:hover {
+        background-color: rgb(211, 94, 94); /* Change the color to red on hover */
+      }
+  }
+  
+  .close-button:focus {
+    outline: none;
+  }
+  
+  .toast-content {
+    flex-grow: 1;
+    padding-right: 10px;
+  }
+  

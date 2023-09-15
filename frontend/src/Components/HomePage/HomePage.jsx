@@ -6,7 +6,6 @@ import HeadLine from "../HeadlineSection/HeadLine";
 export default function HomePage() {
   return (
     <div>
-   
       <HeadLine />
       <InteractionSection />
     </div>
