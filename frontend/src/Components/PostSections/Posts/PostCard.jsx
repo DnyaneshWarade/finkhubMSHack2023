@@ -3,7 +3,6 @@ import ProfileIcon from "./../../../Images/ProfileIcon.png";
 import LikesIcon from "./../../../Images/Likes.svg";
 import "./PostCard.css";
 export default function PostCard({Post}) {
-  // console.log("PostCard", Post);
   return (
   <div>  <div className="PostCard">
   <div className="Head">

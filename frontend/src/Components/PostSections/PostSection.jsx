@@ -7,7 +7,6 @@ export default function PostSection() {
     <div className='PostSection'>
         <PostMenu/>
         <Posts/>
-
     </div>
   )
 }

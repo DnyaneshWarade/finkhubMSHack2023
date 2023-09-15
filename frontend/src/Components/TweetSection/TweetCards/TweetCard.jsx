@@ -2,25 +2,18 @@ import React from "react";
 import "./TweetCard.css";
 import ProfileIcon from "./../../../Images/ProfileIcon.png";
 
-export default function TweetCard() {
-  const tweetDescription = `Market Volume Barometer 6-27-2023
-Sentiment: VORACIOUS 
-Volume: 10% 
-Real Feel: FRIGID 
-Cycle: BEARISH III 
-Portfolio: CASH 
-Next Day Move: SIDEWAYS`;
+export default function TweetCard({Tweet}) {
   return (
     <div className="TweetCard">
       <div className="Details">
         <div className="ProfileDetails">
           <img src={ProfileIcon} alt="ProfileLog" className="ProfileImg" />
-          <p className="UserName">Binca Shinaasi</p>
+          <p className="UserName">{Tweet.userName}</p>
         </div>
-        <p className="Date">Abrl 26</p>
+        <p className="Date">{Tweet.date}</p>
       </div>
       <div className="Description">
-        <pre>{tweetDescription} </pre>
+        <pre>{Tweet.description} </pre>
       </div>
     </div>
   );
