@@ -4,8 +4,9 @@ export async function axiosHttpService(options) {
 	let d1 = new Date();
 
 	try {
+		// console.log(options)
 		let response = await axios(options);
-		//console.log("RESPONSE DATA " + JSON.stringify(response.data));
+		// console.log("RESPONSE DATA " + JSON.stringify(response.data));
 
 		return {
 			url: options.url,
@@ -14,7 +15,7 @@ export async function axiosHttpService(options) {
 			responsetime: timeConversion(d1, new Date()),
 		};
 	} catch (error) {
-		//console.error("RESPONSE DATA " + error);
+		// console.error("RESPONSE DATA " + error);
 
 		if (error.response && error.response.data.Status === "Error") {
 			return {

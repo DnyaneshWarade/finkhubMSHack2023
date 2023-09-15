@@ -1,25 +1,37 @@
 const { axiosHttpService } = require("./axioscall");
 
 const createPostOption = (post) => {
-	if (!post) {
-		return;
-	}
-	let data = JSON.stringify(post);
-	return {
-		method: "post",
-		maxBodyLength: Infinity,
-		url: `${process.env.REACT_APP_SERVER_URL}post/createPost`,
-		headers: {
-			"Content-Type": "application/json",
-		},
-		data: data,
-	};
+  if (!post) {
+    return;
+  }
+  let data = JSON.stringify(post);
+  return {
+    method: "post",
+    maxBodyLength: Infinity,
+    url: `${process.env.REACT_APP_SERVER_URL}post/createPost`,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: data,
+  };
 };
 
 export const createPost = async (post) => {
-	if (!post) {
-		return;
-	}
+  if (!post) {
+    return;
+  }
 
-	return await axiosHttpService(createPostOption(post));
+  return await axiosHttpService(createPostOption(post));
 };
+
+const getPostAllPosts = () => {
+  return {
+    method: "get",
+    maxBodyLength: Infinity,
+    url: `${process.env.REACT_APP_SERVER_URL}post/getAllPosts`,
+  };
+};
+
+export const getPosts = async () => {
+	 return await axiosHttpService(getPostAllPosts());
+}
