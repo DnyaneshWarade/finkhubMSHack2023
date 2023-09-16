@@ -39,10 +39,10 @@ export default function Dashboard() {
     useState(0);
 
   const handlePostSubmission = async () => {
-    if (minPrice > transactionAmount || maxPrice < transactionAmount) {
-      alert("Should be within min and max");
-      return;
-    }
+    // if (minPrice > transactionAmount || maxPrice < transactionAmount) {
+    //   alert("Should be within min and max");
+    //   return;
+    // }
 
     // prepare a post
     var post = {
@@ -235,6 +235,7 @@ export default function Dashboard() {
           </span>
         </div>
 
+        <div className="PriceRow">
         <div className="ThirdLine">
           <div className="PriceSelection">
             at
@@ -248,7 +249,7 @@ export default function Dashboard() {
             <span className="Currency">USD</span>
           </div>
 
-          <div className="Prediction">
+          {/* <div className="Prediction">
             <input
               type="number"
               id="amount"
@@ -259,7 +260,7 @@ export default function Dashboard() {
             <span className="Currency">USD</span>
             <div className="value-1">Min: {minPrice === 0 ? "" : minPrice}</div>
             <div className="value-2">Max: {maxPrice === 0 ? "" : maxPrice}</div>
-          </div>
+          </div> */}
         </div>
 
         <div className="FourthLine">
@@ -295,6 +296,7 @@ export default function Dashboard() {
               <p>Profit Target: {targeProfit}</p>
             </div>
           </div>
+        </div>
         </div>
       </div>
 

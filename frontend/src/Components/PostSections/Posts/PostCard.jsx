@@ -20,7 +20,6 @@ export default function PostCard({ Post }) {
   ];
   function getUserName() {
     const random = parseInt(Math.random(100) * 100);
-    console.log(random);
     return UserNames[random];
   }
   function getDateFromTimeStamp(timeStamp) {

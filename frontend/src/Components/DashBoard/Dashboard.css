@@ -23,6 +23,11 @@
   margin-top: 10px;
 }
 
+.PriceRow{
+  display: flex;
+  justify-content: flex-start;
+}
+
 .RadioSwitch {
   margin-left: 20px;
   display: inline-flex;
