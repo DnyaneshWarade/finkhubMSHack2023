@@ -18,7 +18,7 @@ export default function PostMenu() {
           value={category}
           onChange={(e) => setCategory(e.target.value)}
         >
-          <option value="Select">--Select--</option>
+          <option value="Select">Categories</option>
           <option value="Open">Open</option>
           <option value="Pending">Pending</option>
           <option value="Completed">Completed</option>
@@ -27,8 +27,9 @@ export default function PostMenu() {
           className="SortBy SelectMenu"
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value)}
+          placeholder="Test"
         >
-          <option value="Select">--Select--</option>
+          <option value="Categories">Sort by</option>
           <option value="Open">Open</option>
           <option value="Pending">Pending</option>
           <option value="Completed">Completed</option>
