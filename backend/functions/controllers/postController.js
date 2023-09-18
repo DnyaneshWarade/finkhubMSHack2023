@@ -1,6 +1,9 @@
 const { logger } = require("firebase-functions/v1");
 const Post = require("../models/post");
-const { createPost } = require("../services/hyperLedgerFunctions/postAsset");
+const {
+	createPost,
+	getAllOpenPosts,
+} = require("../services/hyperLedgerFunctions/postAsset");
 
 // Create post
 exports.createPost = async (req, res) => {
@@ -30,6 +33,11 @@ exports.createPost = async (req, res) => {
 };
 
 // Get list of posts
-exports.getUsers = (req, res) => {
-	res.status(200).json(users);
+exports.getAllPosts = async (req, res) => {
+	var result = await getAllOpenPosts();
+	if (result) {
+		res.status(200).json(result);
+	} else {
+		res.status(400).send("Bad request");
+	}
 };
