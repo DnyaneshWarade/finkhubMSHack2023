@@ -9,6 +9,7 @@ const Post = Joi.object({
 	tradeType: Joi.number().required(),
 	price: Joi.number().required(),
 	isComplete: Joi.bool().required(),
+	description: Joi.string(),
 });
 
 module.exports = Post;

@@ -60,6 +60,7 @@ const getAllOpenPostsOption = () => {
 			  tradeType,
 			  price,
 			  isComplete,
+			  description,
 			  ledgerMetadata{
 				owners
 			  }
@@ -73,9 +74,9 @@ const getAllOpenPostsOption = () => {
 		url: `https://${process.env.SPYDRA_MEMBERSHIP_ID}.spydra.app/tokenize/${process.env.SPYDRA_APP_ID}/graphql`,
 		headers: {
 			"X-API-KEY": process.env.SPYDRA_API_KEY,
+			"Content-Type": "application/json",
 		},
 		data: data,
-		"Content-Type": "application/json",
 	};
 };
 
