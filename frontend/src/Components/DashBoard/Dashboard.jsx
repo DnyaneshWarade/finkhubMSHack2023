@@ -109,7 +109,7 @@ export default function Dashboard() {
   };
 
   function updateRangeParameters() {
-    console.log(stockPrice);
+    // console.log(stockPrice);
     if (action === "Buy") {
       setStopLossRangeMinValue(minPrice);
       setStopLossRangeMaxValue(stockPrice);
@@ -119,8 +119,8 @@ export default function Dashboard() {
       setProfitTargetRangeInitialValue(stockPrice);
       setStopLoss(stockPrice);
       setTargetProfit(stockPrice);
-      console.log("buy");
-      console.log(minPrice, maxPrice, stockPrice);
+      // console.log("buy");
+      // console.log(minPrice, maxPrice, stockPrice);
     }
     if (action === "Sell") {
       setStopLossRangeMinValue(stockPrice);
@@ -131,7 +131,7 @@ export default function Dashboard() {
       setProfitTargetRangeInitialValue(stockPrice);
       setStopLoss(stopLossRangeInitialValue);
       setTargetProfit(profitTargetRangeInitialValue);
-      console.log("sell");
+      // console.log("sell");
     }
   }
   //update the risk and profit variables
