@@ -26,6 +26,7 @@
 .PriceRow{
   display: flex;
   justify-content: flex-start;
+  margin-top: 10px;
 }
 
 .RadioSwitch {
@@ -299,8 +300,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .FourthLine {
-  margin-top: 25px;
-  margin-top: 25px;
+  margin-top: 20px;
   color: #000;
   font-family: Poppins;
 }
@@ -387,3 +387,111 @@ input[type="number"]::-webkit-inner-spin-button {
     transform: rotate(360deg);
   }
 }
+
+.User-Range-Selection{
+  display: flex;
+  justify-content: left;
+}
+.User-Range-Selection> div:nth-child(2){
+  margin-left: 30px;
+}
+
+.NewSliderDesign{
+  display: flex;
+  justify-content: left;
+}
+.NewSliderDesign .slider-design label{
+  margin-right: 10px;
+  font-weight: normal;
+  font-size: 16px;
+}
+.NewSliderDesign .TargetProfitDiv2{
+  display: inline;
+  position: relative;
+  text-align: center;
+}
+
+.TargetProfitDiv2 .range-min
+{
+ text-align: center;
+ font-size: 14px;
+ position: absolute;
+ top: 110%;
+ left: 0;
+ width: 0%; /* Adjust the width as needed */
+ font-size: 12px; /* Adjust the font size as needed */
+ color: #555; /* Adjust the color as needed */
+}
+
+.TargetProfitDiv2 .range-max{
+ position: absolute;
+ top: 110%;
+ right:0 ;
+ width: 30%; /* Adjust the width as needed */
+ font-size: 12px; /* Adjust the font size as needed */
+ color: #555; 
+}
+
+.TargetProfitDiv2 .range-value {
+  position: absolute;
+  bottom: 91%;
+  transform: translateX(-50%);
+  font-size: 16px;
+  background-color: #adb6ec;
+  color: #ffffff;
+  padding: 3px 12px;
+  border-radius: 5px;
+  align-items: center;
+}
+
+
+
+
+/* RangeInput.css */
+.range-input {
+  /* background-color: #8692df; */
+  /* position: relative; */
+  /* display: inline-block; */
+  display: inline;
+  position: relative;
+  text-align: center; /* Center-align the values */
+}
+
+.range-input .range-min
+ {
+  text-align: center;
+  font-size: 14px;
+  position: absolute;
+  top: 90%;
+  left: 0;
+  width: 0%; /* Adjust the width as needed */
+  font-size: 12px; /* Adjust the font size as needed */
+  color: #555; /* Adjust the color as needed */
+}
+
+.range-input .range-max{
+  position: absolute;
+  top: 90%;
+  right:0 ;
+  width: 10%; /* Adjust the width as needed */
+  font-size: 12px; /* Adjust the font size as needed */
+  color: #555; 
+}
+
+input[type="range"] {
+  flex: 1;
+  /* margin: 0 10px; */
+  /* width: 100%; */
+}
+
+.range-value {
+  position: absolute;
+  bottom: 100%;
+  transform: translateX(-50%);
+  font-size: 16px;
+  background-color: #adb6ec;
+  color: #ffffff;
+  padding: 3px 10px;
+  border-radius: 5px;
+}
+

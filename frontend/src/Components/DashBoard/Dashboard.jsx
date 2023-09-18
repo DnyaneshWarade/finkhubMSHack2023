@@ -16,8 +16,8 @@ export default function Dashboard() {
   const [stock, setStock] = useState("");
   const [selectedStockSymbol, setSelectedStockSymbol] = useState("");
   const [stockPrice, setStockPrice] = useState();
-  const [amount, setAmount] = useState("");
-  const [transactionAmount, setTransactionAmount] = useState(0);
+  // const [amount, setAmount] = useState("");
+  // const [transactionAmount, setTransactionAmount] = useState(0);
   const [minPrice, setMinPrice] = useState();
   const [maxPrice, setMaxPrice] = useState();
   const [expectedProfitPercentage, setExpectedProfitPercentage] = useState("");
@@ -49,8 +49,8 @@ export default function Dashboard() {
       userId: "xyz",
       ticker: selectedStockSymbol,
       timeStamp: Date.now(),
-      stopLoss: minPrice,
-      target: maxPrice,
+      stopLoss: stopLoss,
+      target: targeProfit,
       tradeType: action == "Buy" ? 0 : 1,
       price: stockPrice,
       isComplete: false,
@@ -65,11 +65,11 @@ export default function Dashboard() {
     }
   };
 
-  // const handleSetStock = (e) => {
-  //   // reset range parameter
-  //   setStock(e.target.value);
-  //   handleBlur();
-  // };
+  const handleSetStock = (e) => {
+    // reset range parameter
+    setStock(e.target.value);
+    handleBlur();
+  };
 
   const handleBlur = async () => {
     try {
@@ -162,6 +162,32 @@ export default function Dashboard() {
       return;
     }
   }
+  // const [minValue, setMinValue] = useState(0);
+  // const [maxValue, setMaxValue] = useState(100);
+  // const [currentValue, setCurrentValue] = useState(50);
+
+  const handleStopLossRangeChange = (e) => {
+    setStopLoss(parseFloat(e.target.value));
+  };
+  const handleTargetProfitRangeChange = (e) => {
+    setTargetProfit(parseFloat(e.target.value));
+  };
+
+  // const handleRangeChange = (event) => {
+  //   const newValue = parseInt(event.target.value, 10);
+  //   setCurrentValue(newValue);
+  // };
+
+  const calculateSpanPosition = (minVal, maxVal, chooseValue) => {
+    const min = minVal;
+    const max = maxVal;
+    const range = max - min;
+    let percentage = ((parseInt(chooseValue, 10) - min) / range) * 100;
+    percentage = isNaN(percentage) ? 50 : percentage;
+    // Ensure the span doesn't go beyond the left edge
+    percentage = Math.max(percentage, 0);
+    return percentage;
+  };
 
   return (
     <div className="DashBoard">
@@ -236,67 +262,91 @@ export default function Dashboard() {
         </div>
 
         <div className="PriceRow">
-        <div className="ThirdLine">
-          <div className="PriceSelection">
-            at
-            <input
-              type="number"
-              id="amount"
-              max="100000"
-              value={stockPrice}
-              disabled={true}
-            />{" "}
-            <span className="Currency">USD</span>
-          </div>
-
-          {/* <div className="Prediction">
-            <input
-              type="number"
-              id="amount"
-              max="100000"
-              onChange={(e) => setTransactionAmount(e.target.value)}
-              value={transactionAmount}
-            />
-            <span className="Currency">USD</span>
-            <div className="value-1">Min: {minPrice === 0 ? "" : minPrice}</div>
-            <div className="value-2">Max: {maxPrice === 0 ? "" : maxPrice}</div>
-          </div> */}
-        </div>
-
-        <div className="FourthLine">
-          <div className="RangeSelector">
-            <div className="StopLossDiv">
-              <label htmlFor="StopLoss">StopLoss</label>
+          <div className="ThirdLine">
+            <div className="PriceSelection">
+              at
               <input
-                type="range"
-                name="StopLoss"
-                id="StopLoss"
-                min={stopLossRangeMinValue}
-                max={stopLossRangeMaxValue}
-                value={stopLoss}
-                step={sliderStps}
-                onChange={(e) => setStopLoss(parseFloat(e.target.value))}
-                className="RangeSlider"
-              />
-              <p>Stop Loss: {stopLoss}</p>
-            </div>
-            <div className="TargetProfitDiv">
-              <label htmlFor="TargetProfit">TargetProfit</label>
-              <input
-                type="range"
-                name="TargetProfit"
-                id="TargetProfit"
-                min={profitTargetRangeMinValue}
-                max={profitTargetRangeMaxValue}
-                value={targeProfit}
-                step={sliderStps}
-                onChange={(e) => setTargetProfit(parseFloat(e.target.value))}
-                className="RangeSlider"
-              />
-              <p>Profit Target: {targeProfit}</p>
+                type="number"
+                id="amount"
+                max="100000"
+                value={stockPrice}
+                disabled={true}
+              />{" "}
+              <span className="Currency">USD</span>
             </div>
           </div>
-        </div>
+
+          <div className="FourthLine">
+            <div className="User-Range-Selection">
+              <div className="NewSliderDesign">
+                <div className="slider-design">
+                  <label htmlFor="StopLoss">StopLoss</label>
+                </div>
+                <div className="TargetProfitDiv2">
+                  <input
+                    type="range"
+                    name="StopLoss"
+                    className="RangeSlider"
+                    min={stopLossRangeMinValue}
+                    max={stopLossRangeMaxValue}
+                    value={stopLoss}
+                    step={sliderStps}
+                    onChange={handleStopLossRangeChange}
+                  />
+                  <div className="range-min">Min:{stopLossRangeMinValue}</div>
+                  <div className="range-max">Max:{stopLossRangeMaxValue}</div>
+                  <div
+                    className="range-value"
+                    style={{
+                      left: `calc(${calculateSpanPosition(
+                        stopLossRangeMinValue,
+                        stopLossRangeMaxValue,
+                        stopLoss
+                      )}% - 12px)`,
+                    }}
+                  >
+                    {stopLoss ? stopLoss : 0}
+                  </div>
+                </div>
+              </div>
+              <div className="NewSliderDesign">
+                <div className="slider-design">
+                  <label htmlFor="TargetProfit">Target Profilt</label>
+                </div>
+                <div className="TargetProfitDiv2">
+                  <input
+                    className="RangeSlider"
+                    type="range"
+                    name="TargetProfit"
+                    id="TargetProfit"
+                    min={profitTargetRangeMinValue}
+                    max={profitTargetRangeMaxValue}
+                    value={targeProfit}
+                    step={sliderStps}
+                    onChange={handleTargetProfitRangeChange}
+                  />
+                  <div className="range-min">
+                    Min:{profitTargetRangeMinValue}
+                  </div>
+                  <div className="range-max">
+                    Max:{profitTargetRangeMaxValue}
+                  </div>
+                  <div
+                    className="range-value"
+                    style={{
+                      left: `calc(${calculateSpanPosition(
+                        profitTargetRangeMinValue,
+                        profitTargetRangeMaxValue,
+                        targeProfit
+                      )}% - 12px)`,
+                    }}
+                  >
+                    {targeProfit ? targeProfit : 0}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
